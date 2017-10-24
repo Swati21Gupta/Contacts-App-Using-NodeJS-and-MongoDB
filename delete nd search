@@ -1,0 +1,26 @@
+app.get('/delete',(req,res)=>{
+    res.sendFile(__dirname+'/del.html')
+})
+    app.post('/delete',(req,res)=>{
+       var fname=req.param('fname')
+       var myquery = { fname: fname};
+       
+    //   console.log(myquery);
+        db.collection('contacts').remove(myquery, function(err, obj) {
+            res.redirect('/display');
+             
+       })})
+ app.get('/search',(req,res)=>{
+     res.sendFile(__dirname+'/search.html')
+ })
+    app.post('/search',(req,res)=>{
+      var fname=req.param('fname')
+      var query= {fname:fname};
+      db.collection('contacts').find(query).toArray((err,result)=>{
+        if (err) return console.log(err)
+        res.render('find.ejs', {contacts: result})
+        
+
+      })
+
+    })
